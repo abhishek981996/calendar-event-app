@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>JavaScript calendar</title>
+</head>
+<body>
+  <div class="container">
+    <div class="calendar">
+      <a href="{%url 'calendar' year=prev_year month=prev_month %}">prev</a>
+      <a href="{%url 'calendar' year=nex_year month=nex_month %}">next</a>
+      {% autoescape off %}{{htmlCalendar}}{% endautoescape %}
+    </div>
+
+  </div>
+
+
+
+
+</body>
+</html>
