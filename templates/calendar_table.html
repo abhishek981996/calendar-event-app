@@ -1,22 +1,4 @@
-<html>
-<head>
-<title>JavaScript calendar</title>
-	<link rel="stylesheet" type="text/css" href="/static/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/home.css">
-	<!--fontawesome CDN up here-->
-	<script src="https://use.fontawesome.com/b6dbcf5532.js"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.js"
-		integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-		crossorigin="anonymous">
-	</script>
-	<script type="text/javascript" src="/static/javascript/home.js"></script>
-</head>
-<body>
-	<div class='sidebar'>
-		<p>sidebar here</p>
-		
-	</div>
-  <div class="container">
+<div class="container">
     <div class="calendar">
     	<div class='Next-prev'>
       		<a href="{%url 'calendar' year=prev_year monthe=prev_month %}" class='prev' onclick="getSummary('table')">
@@ -104,35 +86,4 @@
 		</table>
 
     </div>
-
-  </div>
-	<script
-			  src="https://code.jquery.com/jquery-3.2.1.js"
-			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-			  crossorigin="anonymous">
-
-
-	</script>
-
-	<script type="text/javascript">
-
-	$(document).on('click','prev',function(e){
-		e.preventDefault();
-
-		$.ajax({
-
-     		type: "GET",
-     		url: "{%url 'calendar' year=prev_year monthe=prev_month %}",
-     		success: function(data) {
-           // data is ur summary
-          $('container').html(data);
-     }
-
-   });
-
-});
-
-
-	</script>
-</body>
-</html>
+</div>
