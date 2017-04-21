@@ -1,6 +1,9 @@
 /*developed by abhishek981996
 at 20 april 2017 */
 
+
+
+
 .sidebar{
 	background-color: #2ed39e;
 	height: 100%;
@@ -22,8 +25,8 @@ table{
 	color: #b3b3b3;
 }
 
-tr .month{ 
-	padding-bottom: 0px; 
+tr .month{
+	padding-bottom: 0px;
 	height: 3em;
 	padding-top: 0px;
 	text-align: center;
@@ -31,8 +34,8 @@ tr .month{
 	color: #2ed39e;
 	padding-top: 10px;
 }
-th { 
-	padding-bottom: 0px; 
+th {
+	padding-bottom: 0px;
 	height: 3em;
 	border-bottom:1px solid #b3b3b3;
 	vertical-align: bottom;
@@ -40,20 +43,19 @@ th {
 
 td {
 padding-top: 10px;
-padding-right: 0px;
 padding-bottom: 3px;
-padding-left: 1em;
+padding-left: .1em;
 width:14.28%;
+height: 16%;
 }
 
-table { text-align: left; 
-	 border-collapse: collapse; 
+table { text-align: left;
+	 border-collapse: collapse;
 	}
 
-/*applying border to my boxes*/ 
+/*applying border to my boxes*/
 td {
 border: 1px solid #b3b3b3;
-border-radius: 5px;
 
 }
 
@@ -79,14 +81,22 @@ border-radius: 5px;
 	padding-top: 10px;
 }
 .fa-refresh{
-	color: #2ed39e;	
+	color: #2ed39e;
 }
 .fa-cog{
-	color: #2ed39e;	
+	color: #2ed39e;
 }
 
-/*active class for current date time*/
-.active{
-	background-color: #2ed39e;
-	font-size: 3em;
+/*formatting the button */
+.wrapper{
+	width: 100%
+}
+.wrapper_class {
+	display: none;
+	background-color: #ff8787;
+	text-align: center;
+	width:100%;
+}
+.wrapper:hover .wrapper_class{
+	display: inline;
 }
