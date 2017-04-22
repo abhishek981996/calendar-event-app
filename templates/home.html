@@ -25,9 +25,10 @@
 
 	<div class="popup" data-popup="popup-1">
 		<div class="popup-inner">
-			<form method="post">
+			<form method="post" action={%url 'form_submit'%}>
 						{%csrf_token%}
 				    {{ EventForm.as_p }}
+						<input type="submit" value="submit">
 				</form>
 			<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
 		</div>

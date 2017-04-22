@@ -5,7 +5,7 @@
 import calendar
 import datetime
 from itertools import groupby
-from webapp.models import Events
+from webapp.models import EventsDetails
 from django.http import HttpResponse
 from django.shortcuts import render
 from webapp.helper_functions import calculate, add_class
@@ -81,3 +81,13 @@ def today(request):
         'this_year': str(time.year),
         'EventForm': EventForm_detail,
     })
+
+
+def form_submit(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save()
+            return HttpResponse("success")
+        return HttpResponse("error in form")
+    return HttpResponse("sucesss get request")

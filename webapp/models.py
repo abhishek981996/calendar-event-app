@@ -5,10 +5,10 @@ from django.db import models
 # Create your models here.
 
 
-class Events(models.Model):
-    event_name = models.CharField(max_length=50)
-    date_begin = models.DateTimeField()
-    date_end = models.DateTimeField()
+class EventsDetails(models.Model):
+    event = models.CharField(max_length=50)
+    date_begin = models.CharField(max_length=50)
+    date_end = models.CharField(max_length=50)
     time_start = models.IntegerField()
     time_ends = models.IntegerField()
     Location = models.CharField(max_length=50)
@@ -16,4 +16,5 @@ class Events(models.Model):
     created_at = models.DateTimeField('date created', auto_now_add=True)
 
     def __str__(self):
-        return '%s, %s, %s, %s' % (self.event, self.year, self.month, self.date)
+        return '%s, %s, %s, %s,%s' % (self.event, self.date_begin, self.date_end,
+                                      self.time_start, self.time_ends)

@@ -10,8 +10,9 @@ urlpatterns = [
     # 1) year 2) month for detecting whether he she wants prev or
     # next_month
 
-    url(r'^$', views.today, name='calendar_now')
+    url(r'^$', views.today, name='calendar_now'),
     # when the user opens this webapp he/she will see this calendar_now
     # from the above url. It simply displays the calendar with today date and
     # month
+    url(r'^form-submit/', views.form_submit, name='form_submit')
 ]
