@@ -14,6 +14,7 @@ from webapp.helper_functions import calculate, add_class
 # add_class is used for adding css for current date
 # then we use the jqery to display green color to the current date using
 # class active
+from webapp.forms import EventForm
 
 
 month = {'1': 'January',
@@ -64,12 +65,11 @@ def today(request):
 
     month_name = month[str(time.month)]
     # getting present month name
-
+    EventForm_detail = EventForm()
     edited_month_array = add_class(
         month_array, time.day, time.month, time.year)
     # the function for adding active class for current date and weekday starts
     # here
-    print edited_month_array
 
     return render(request, 'home.html', {
         'month_name': month_name,
@@ -79,4 +79,5 @@ def today(request):
         'nex_year': nex_year,
         'nex_month': nex_month,
         'this_year': str(time.year),
+        'EventForm': EventForm_detail,
     })

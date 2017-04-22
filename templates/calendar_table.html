@@ -1,92 +1,91 @@
-
-{% block head_block %}{% endblock %}
-{% autoescape off %}
+ {% block head_block %}{% endblock %} {% autoescape off %}
 <div class="calendar">
-  <div class='Next-prev'>
-      <a href="{%url 'calendar' year=prev_year monthe=prev_month %}" class='prev' onclick="getSummary('table')">
-        <i class="fa fa-chevron-up" aria-hidden="true"></i>
-      </a>
-      <a href="{%url 'calendar' year=nex_year monthe=nex_month %}" class='next'>
-        <i class="fa fa-chevron-down" aria-hidden="true"></i>
-      </a>
-  </div>
-  <div class="end">
-      <a href="">
-        <i class="fa fa-refresh" aria-hidden="true"></i>
-      </a>
-    <a href="">
-      <i class="fa fa-cog" aria-hidden="true"></i>
-    </a>
+    <div class='Next-prev'>
+
+            <a href="{%url 'calendar' year=prev_year monthe=prev_month %}" class='prev' onclick="getSummary('table')">
+                <i class="fa fa-chevron-up" aria-hidden="true"></i>
+            </a>
+
+
+            <a href="{%url 'calendar' year=nex_year monthe=nex_month %}" class='next'>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>
+        
     </div>
-      <table border="0" cellpadding="0" cellspacing="0" class="month" id='table'>
+    <div class="end">
+        <a href="">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+        </a>
+        <a href="">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+        </a>
+    </div>
+    <table border="0" cellpadding="0" cellspacing="0" class="month" id='table'>
         <tr>
-          <th colspan="7" class="month">{{month_name}} {{this_year}}</th>
+            <th colspan="7" class="month">{{month_name}} {{this_year}}</th>
         </tr>
 
-          <tr>
-<th class="sun">Sunday</th>
-<th class="mon">Monday</th>
-<th class="tue">Tuesday</th>
-<th class="wed">Wednesday</th>
-<th class="thu">Thursday</th>
-<th class="fri">Friday</th>
-<th class="sat">Saturday</th>
-</tr>
+        <tr>
+            <th class="sun">Sunday</th>
+            <th class="mon">Monday</th>
+            <th class="tue">Tuesday</th>
+            <th class="wed">Wednesday</th>
+            <th class="thu">Thursday</th>
+            <th class="fri">Friday</th>
+            <th class="sat">Saturday</th>
+        </tr>
 
-{% for i in htmlcalendar %}
-<tr>
-  {% for j in i %}
-<td class="Weekname" class="tdbutton">
-  <div class="wrapper">
-  {{j}}
-  <br/>
-  <button class="wrapper_class">
-  New Event
-</button>
-</div>
-</td>
-{%endfor%}
-</tr>
-{%endfor%}
-</table>
-{% endautoescape %}
-{% block body_block %}{% endblock %}
-{%block script_block%} {% endblock %}
+        {% for i in htmlcalendar %}
+        <tr>
+            {% for j in i %}
+            <td class="Weekname" class="tdbutton">
+                <div class="wrapper">
+                    {{j}}
+                    <br/>
+                    <button class="wrapper_class btn" data-popup-open="popup-1">
+                    New Event
+                  </button>
+                </div>
+            </td>
+            {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+    {% endautoescape %} {% block body_block %}{% endblock %} {%block script_block%} {% endblock %}
 
-<script type="text/javascript">
-  $(document).on('click','.prev',function(e){
-  e.preventDefault();
+    <script type="text/javascript">
+        $(document).on('click', '.prev', function(e) {
+            e.preventDefault();
+            $.ajax({
 
-  $.ajax({
+                type: "GET",
+                url: "{%url 'calendar' year=prev_year monthe=prev_month %}",
+                async: false,
+                success: function(data) {
+                    // data is ur summary
+                    $('.container').html(data);
+                    console.log(data)
+                }
 
-      type: "GET",
-      url: "{%url 'calendar' year=prev_year monthe=prev_month %}",
-      success: function(data) {
-         // data is ur summary
-        $('.container').html(data);
-        console.log(data)
-   }
+            });
 
- });
+        });
 
-});
+        $(document).on('click', '.next', function(e) {
+            e.preventDefault();
+            $.ajax({
 
-$(document).on('click','.next',function(e){
-e.preventDefault();
+                type: "GET",
+                url: "{%url 'calendar' year=nex_year monthe=nex_month %}",
+                async: false,
+                success: function(data) {
+                    // data is ur summary
+                    $('.container').html(data);
+                    console.log(data)
+                }
 
-$.ajax({
+            });
 
-    type: "GET",
-    url: "{%url 'calendar' year=nex_year monthe=nex_month %}",
-    success: function(data) {
-       // data is ur summary
-      $('.container').html(data);
-      console.log(data)
- }
-
-});
-
-});
-
-</script>
-{% block end_block%} {% endblock %}
+        });
+    </script>
+    {% block end_block%} {% endblock %}

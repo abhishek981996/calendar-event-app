@@ -6,10 +6,9 @@ from django.db import models
 
 
 class Events(models.Model):
-    event = models.CharField(max_length=50)
-    year = models.IntegerField()
-    month = models.IntegerField()
-    date = models.IntegerField()
+    event_name = models.CharField(max_length=50)
+    date_begin = models.DateTimeField()
+    date_end = models.DateTimeField()
     time_start = models.IntegerField()
     time_ends = models.IntegerField()
     Location = models.CharField(max_length=50)
