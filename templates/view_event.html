@@ -4,7 +4,7 @@
 
 <body>
     <div class="popup-2">
-
+<div>
         <h1>
     Event {{query.event}}
   </h1>
@@ -24,8 +24,8 @@
     Description
   </h2> {{query.Description}}
     </div>
-    <a class="button-edit">EDIT</a>
-    <a class="button-delete">DELETE</a>
+    <a class="button-edit" href="{%url 'edit_events' id=id%}">EDIT</a>
+    <a class="button-delete" href="{%url 'edit_events' id=id%}">DELETE</a>
     </div>
 
 </body>
