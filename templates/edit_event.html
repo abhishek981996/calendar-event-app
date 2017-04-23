@@ -1,0 +1,4 @@
+<form method="POST" method="{% url 'edit_event' id=id%}">
+  {% csrf_token %}
+  {%form.as_p%}
+</form>

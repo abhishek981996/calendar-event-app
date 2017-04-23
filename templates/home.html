@@ -1,71 +1,26 @@
-{%extends 'calendar_table.html'%} {%block head_block%}
+{%extends 'calendar_table.html'%}
+{%block head_block%}
 <html>
-
 <head>
-	<title>JavaScript calendar</title>
+	<title>Python calendar</title>
 	<link rel="stylesheet" type="text/css" href="/static/reset.css">
 	<link rel="stylesheet" type="text/css" href="/static/home.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+
 	<!--fontawesome CDN up here-->
 	<script src="https://use.fontawesome.com/b6dbcf5532.js"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous">
-	</script>
 	<script type="text/javascript" src="/static/javascript/home.js"></script>
 </head>
+<body id="body">
+		{%endblock%}
 
-<body>
-	<div class='sidebar'>
-		<p>sidebar here</p>
-
-	</div>
-	<div class="container">
-		{%endblock%} {%block body_block%}
-	</div>
-	</div>
+	{%block body_block%}
 
 
-	<div class="popup" data-popup="popup-1">
-		<div class="popup-inner">
-			<form method="post" action={%url 'form_submit'%}>
-						{%csrf_token%}
-				    {{ EventForm.as_p }}
-						<input type="submit" value="submit">
-				</form>
-			<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-		</div>
-	</div>
-
-
-	<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous">
-	</script>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.active').parents('td').css({
-				'background-color': '#2ed39e',
-				"color": '#ffffff'
-			});
-		});
-
-		$(function() {
-			//----- OPEN
-			$('[data-popup-open]').on('click', function(e) {
-				var targeted_popup_class = jQuery(this).attr('data-popup-open');
-				$('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
-
-				e.preventDefault();
-			});
-
-			//----- CLOSE
-			$('[data-popup-close]').on('click', function(e) {
-				var targeted_popup_class = jQuery(this).attr('data-popup-close');
-				$('[data-popup="' + targeted_popup_class + '"]').fadeOut(350);
-
-				e.preventDefault();
-			});
-		});
-	</script>
-	{%endblock%} {% block end_block%}
+{%endblock%}
+	{% block end_block%}
 </body>
-
 </html>
 {% endblock %}

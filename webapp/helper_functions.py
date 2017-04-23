@@ -50,3 +50,20 @@ def add_class(month_calendar, date, month, year):
             counter_week += 1
 
     return month_calendar
+
+
+def event_button(dataobject):
+    """
+    Returns a dictionary containing all the details of all events
+    a query dataobject is passed over here
+    This data is used to add buttons in the html hence name is event_button
+    """
+
+    events = []    # the obtained data will be in the form of tuple so after algo this data will
+    # be added to event with proper format
+    counter = 0
+    for data in dataobject:
+        for i in range(int(data.date_begin), int(data.date_end) + 1):
+            events.append([int(i), int(data.id)])
+
+    return events

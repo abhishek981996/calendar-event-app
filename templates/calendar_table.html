@@ -1,8 +1,13 @@
  {% block head_block %}{% endblock %} {% autoescape off %}
-<div class="calendar">
-    <div class='Next-prev'>
+<div class='sidebar'>
+    <p>sidebar here</p>
 
-            <a href="{%url 'calendar' year=prev_year monthe=prev_month %}" class='prev' onclick="getSummary('table')">
+</div>
+<div class="container">
+    <div class="calendar">
+        <div class='Next-prev'>
+
+            <a href="{%url 'calendar' year=prev_year monthe=prev_month %}" class='prev'>
                 <i class="fa fa-chevron-up" aria-hidden="true"></i>
             </a>
 
@@ -10,82 +15,144 @@
             <a href="{%url 'calendar' year=nex_year monthe=nex_month %}" class='next'>
                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
             </a>
-        
-    </div>
-    <div class="end">
-        <a href="">
-            <i class="fa fa-refresh" aria-hidden="true"></i>
-        </a>
-        <a href="">
-            <i class="fa fa-cog" aria-hidden="true"></i>
-        </a>
-    </div>
-    <table border="0" cellpadding="0" cellspacing="0" class="month" id='table'>
-        <tr>
-            <th colspan="7" class="month">{{month_name}} {{this_year}}</th>
-        </tr>
 
-        <tr>
-            <th class="sun">Sunday</th>
-            <th class="mon">Monday</th>
-            <th class="tue">Tuesday</th>
-            <th class="wed">Wednesday</th>
-            <th class="thu">Thursday</th>
-            <th class="fri">Friday</th>
-            <th class="sat">Saturday</th>
-        </tr>
+        </div>
+        <div class="end">
+            <a href="">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </a>
+            <a href="">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+            </a>
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" class="month" id='table'>
+            <tr>
+                <th colspan="7" class="month">{{month_name}} {{this_year}}</th>
+            </tr>
 
-        {% for i in htmlcalendar %}
-        <tr>
-            {% for j in i %}
-            <td class="Weekname" class="tdbutton">
-                <div class="wrapper">
-                    {{j}}
-                    <br/>
-                    <button class="wrapper_class btn" data-popup-open="popup-1">
+            <tr>
+                <th class="sun">Sunday</th>
+                <th class="mon">Monday</th>
+                <th class="tue">Tuesday</th>
+                <th class="wed">Wednesday</th>
+                <th class="thu">Thursday</th>
+                <th class="fri">Friday</th>
+                <th class="sat">Saturday</th>
+            </tr>
+
+            {% for weekday in htmlcalendar %}
+            <!--this for loop is for displaying
+          day-->
+            <tr>
+                {% for day in weekday %}
+                <td class="Weekname" class="tdbutton">
+                    <div class="wrapper">
+                        {{day}}
+                        <br/>
+                        <!--this data is for checking the
+                    the events on that day in the format events[[date,id]
+                    ,[data,ids]}-->
+                        {% for value in events %} {% if value.0 == day %}
+
+                          <a href="{% url 'view_events' id=value.1%}" class="Event">
+                            Event {{value.1}}
+                          </a>
+
+                    {% endif %} {% endfor %}
+                        <button class="wrapper_class btn" data-popup-open="popup-1">
                     New Event
                   </button>
-                </div>
-            </td>
+
+                    </div>
+                </td>
+                {%endfor%}
+            </tr>
             {%endfor%}
-        </tr>
-        {%endfor%}
-    </table>
-    {% endautoescape %} {% block body_block %}{% endblock %} {%block script_block%} {% endblock %}
+        </table>
+        {% endautoescape %}
+    </div>
+</div>
+<div class="popup" data-popup="popup-1">
+    <div class="popup-inner">
+        <form method="post" action=" {% url 'form_submit' %}">
+            {%csrf_token%} {{ EventForm.as_p }}
+            <input type="submit" value="submit">
+        </form>
+        <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+    </div>
+</div>
+<!--this below line of code is too important as in between this div-->
+<div class="popup-2" data-popup="popup-1">
+</div>
+<!--javascript starts from here-->
+<!--2 ajax data are field and then popup is display using jquery-->
+<script type="text/javascript">
+    //ajax request for displaying prev month`
+    $('.prev').on('click',function(e) {
+        e.preventDefault();
+        $("#body").load("{%url 'calendar' year=prev_year monthe=prev_month %}")
+    });
 
-    <script type="text/javascript">
-        $(document).on('click', '.prev', function(e) {
+    $('.next').on('click',function(e) {
+        e.preventDefault();
+        $("#body").load("{%url 'calendar' year=nex_year monthe=nex_month %}")
+    });
+    //modal pop up starts from here
+    $(document).ready(function() {
+        $('.active').parents('td').css({
+            'background-color': '#2ed39e',
+            "color": '#ffffff'
+        });
+    });
+
+    $(function() {
+        //----- OPEN
+        $('[data-popup-open]').on('click', function(e) {
+            var targeted_popup_class = jQuery(this).attr('data-popup-open');
+            $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
+
             e.preventDefault();
-            $.ajax({
-
-                type: "GET",
-                url: "{%url 'calendar' year=prev_year monthe=prev_month %}",
-                async: false,
-                success: function(data) {
-                    // data is ur summary
-                    $('.container').html(data);
-                    console.log(data)
-                }
-
-            });
-
         });
 
-        $(document).on('click', '.next', function(e) {
+        //----- CLOSE
+        $('[data-popup-close]').on('click', function(e) {
+            var targeted_popup_class = jQuery(this).attr('data-popup-close');
+            $('[data-popup="' + targeted_popup_class + '"]').fadeOut(350);
+
             e.preventDefault();
-            $.ajax({
-
-                type: "GET",
-                url: "{%url 'calendar' year=nex_year monthe=nex_month %}",
-                async: false,
-                success: function(data) {
-                    // data is ur summary
-                    $('.container').html(data);
-                    console.log(data)
-                }
-
-            });
-
         });
-    </script>
-    {% block end_block%} {% endblock %}
+    });
+    //modal pop up ends
+    $(function () {
+   $(".popup-2").dialog({
+       autoOpen: false,
+       modal: true,
+       title: "EVENT details",
+       buttons: {
+           Close: function () {
+               $(this).dialog('close');
+           }
+       }
+   });
+ });
+
+    //ajax request to open modal when a event is viewed is below
+    $('.Event').on('click', function(e) {
+      e.preventDefault();
+      var $link = $(this).attr('href')
+
+      $.ajax({
+    type: "GET", url: $link,
+    async: false,
+    success: function(response){
+      //First you must append to div:
+
+       $(".popup-2").html(response);
+        $(".popup-2").dialog("open");
+      }//success
+      });
+    });
+
+//ajax request for view_event ends here
+</script>
+{%block script_block%}{% endblock %} {% block end_block%} {% endblock %}

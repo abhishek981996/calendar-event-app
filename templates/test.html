@@ -18,7 +18,20 @@
 </script>
 
 <script type="text/javascript">
+$('.Event').on('click', function(e) {
 
+    e.preventDefault();
+    console.log('oolaa')
+  var $link = $(this).attr('href')
+  $.ajax({
+type: "GET", url: $link,
+async: false,
+success: function(response){
+  //First you must append to div:
+   $('.popup-2').html(response).modal();
+}//success
+});
+});
 </script>
 </body>
 </html>

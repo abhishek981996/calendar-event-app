@@ -16,4 +16,4 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = EventsDetails
-        exclude = ['created_at']
+        exclude = ['created_at', 'id', 'year', 'month']
