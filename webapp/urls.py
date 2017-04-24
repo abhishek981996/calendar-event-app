@@ -21,5 +21,6 @@ urlpatterns = [
     # and populating them
     url(r'^view-events/(?P<id>\d+)',
         views.view_events, name="view_events"),
-    url(r'^edit-events/(?P<id>\d+)', views.edit_events, name="edit_events")
+    url(r'^edit-events/(?P<id>\d+)', views.edit_events, name="edit_events"),
+    url(r'^delete_events/(?P<id>\d+)', views.delete_events, name="delete_events")
 ]

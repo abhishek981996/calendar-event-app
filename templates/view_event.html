@@ -1,33 +1,33 @@
-<html>
-<meta charset="utf-8">
-</head>
 
-<body>
     <div class="popup-2">
-<div>
-        <h1>
+<div style="">
+
+<h1 style="color:#ff8787">
     Event {{query.event}}
   </h1>
         <br/>
-        <h2>
+        <h2 style="color:#e5e6e7">
     Where
   </h2>
         <br/>
-        <p>
+        <p style="color:#b3b3b3">
             {{query.Location}}
-            <br/>
             <br/>
             <h2>
                 When
-                </h2> {{query.date_begin}} to {{query.date_end}},{{query.year}}
+                </h2>
+                <p style="color:#b3b3b3">
+                {{query.date_begin}} to {{query.date_end}},{{query.year}}</p>
             <h2>
+            </br>
     Description
-  </h2> {{query.Description}}
+  </h2>
+  <p style="color:#b3b3b3">{{query.Description}}</p>
     </div>
-    <a class="button-edit" href="{%url 'edit_events' id=id%}">EDIT</a>
-    <a class="button-delete" href="{%url 'edit_events' id=id%}">DELETE</a>
+  </br>
+    <a id = "modal-window" class="Event" href="{%url 'edit_events' id=id%}">EDIT</a>
+    <a class="Event" href="{%url 'delete_events' id=id%}">DELETE</a>
+    <div class="popup-3" data-popup="popup-1">
+
     </div>
-
-</body>
-
-</html>
+    </div>

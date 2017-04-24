@@ -99,7 +99,18 @@ border: 1px solid #b3b3b3;
 .wrapper:hover .wrapper_class{
 	display: inline;
 }
+.Event{
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #2ed396;
+  border-right: 1px solid #2ed396;
+  border-bottom: 1px solid #2ed396;
+  border-left: 1px solid #2ed396;
 
+}
 
 /* Outer */
 .popup {
@@ -155,3 +166,66 @@ border: 1px solid #b3b3b3;
   text-decoration:none;
 
 }
+/* work for sidebar having table time and whether report are display here*/
+.sidebar table{
+	width: 90%;
+	margin-left: 5%;
+}
+.sidebar table,.sidebar table tr,.sidebar table td,.sidebar table tr th{
+	height: 10%;
+	font-size: .9em;
+	color: white;
+	border: none;
+}
+.sidebar .month{
+	margin-top: 2em;
+	padding-bottom: 1em;
+}
+.sidebar table{
+	height: 10%;
+}
+.sidebar table tr th{
+	color: white;
+	margin-bottom: 1em;
+}
+.active-small{
+	background-color: #2bc493;
+}
+.sidebar table tr td .active{
+	color: black;
+}
+.days{
+	padding-bottom: 1em;
+}
+
+
+/*formatting the current time class for displaying current time*/
+.current-time{
+	margin-top: 2em;
+
+	font-size:2.5em;
+	color: white;
+	text-align: center;
+
+}
+
+/*weather conditions*/
+.fa-cloud{
+	margin:.1em;
+	color: #fff;
+
+}
+.weather{
+	margin-top:50%;
+	color: white;
+	font-size: .9em;
+}
+.weather-inside{
+	background-color: #2bc493;
+}
+.current-weather{
+	text-align: center;
+}
+
+
+/*another model to view data*/

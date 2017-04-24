@@ -1,7 +1,64 @@
  {% block head_block %}{% endblock %} {% autoescape off %}
+<!--sidebar up here -->
 <div class='sidebar'>
-    <p>sidebar here</p>
+    <table border="0" cellpadding="0" cellspacing="0" class="month" id='table'>
+        <tr>
+            <th colspan="7" class="month">{{month_name}} {{this_year}}</th>
+        </tr>
 
+        <tr>
+            <th class="days">Sun</th>
+            <th class="days">Mon</th>
+            <th class="days">Tue</th>
+            <th class="days">Wed</th>
+            <th class="days">Thu</th>
+            <th class="days">Fri</th>
+            <th class="days">Sat</th>
+        </tr>
+
+        {% for weekday in htmlcalendar %}
+        <!--this for loop is for displaying
+    day-->
+        <tr>
+            {% for day in weekday %} {% if day == 0%}
+            <td>
+                {%else%}
+
+                <td class="active-small">
+
+                    {{day}} {%endif%}
+
+                </td>
+                {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+
+
+
+    <div>
+        <!--this below given logic is used to determine pm or am-->
+        {%if time.hour < 12%}
+        <h1 class="current-time"> {{time.hour}}:{{time.minute}}<span class="ampm"> am</span></h1>
+
+            {% elif time.hour == 12%}
+            <h1 class="current-time"> {{time.hour}}:{{time.minute}}
+      <span class="ampm"> pm</span></h1> {%else%}
+            <h1 class="current-time"> {{timepm}}:{{time.minute}}<span class="ampm"> am</span>
+      </h1> {%endif%}
+
+    </div>
+
+    <div class ="weather">
+      <p style="text-align:center"> weather</p>
+      <div class="weather-inside">
+
+      <h1 class="current-weather">
+        <i class="fa fa-cloud fa-5x" aria-hidden="true"></i>
+        {{temperature}} {{temperature_unit}}</h1>
+      <h2 style="text-align:center">{{conditions}}</h2>
+      </div>
+    </div>
 </div>
 <div class="container">
     <div class="calendar">
@@ -18,10 +75,10 @@
 
         </div>
         <div class="end">
-            <a href="">
+            <a href="#">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </a>
-            <a href="">
+            <a href="#">
                 <i class="fa fa-cog" aria-hidden="true"></i>
             </a>
         </div>
@@ -45,20 +102,26 @@
           day-->
             <tr>
                 {% for day in weekday %}
-                <td class="Weekname" class="tdbutton">
+                {% if day == 0%}<!--the htmlcalendar is in the format ([0,0,1])
+                  so removing the 0 i.e day from another month-->
+                <td class="Weekname noday" class="tdbutton">
                     <div class="wrapper">
-                        {{day}}
+
                         <br/>
+                        {%else%}
+                        <td class="Weekname" class="tdbutton">
+                            <div class="wrapper">
+                                {{day}}
+                                <br/>
+                          {% endif%}
                         <!--this data is for checking the
                     the events on that day in the format events[[date,id]
                     ,[data,ids]}-->
                         {% for value in events %} {% if value.0 == day %}
 
-                          <a href="{% url 'view_events' id=value.1%}" class="Event">
+                        <a href="{% url 'view_events' id=value.1%}" class="Event">
                             Event {{value.1}}
-                          </a>
-
-                    {% endif %} {% endfor %}
+                          </a> {% endif %} {% endfor %}
                         <button class="wrapper_class btn" data-popup-open="popup-1">
                     New Event
                   </button>
@@ -76,7 +139,7 @@
     <div class="popup-inner">
         <form method="post" action=" {% url 'form_submit' %}">
             {%csrf_token%} {{ EventForm.as_p }}
-            <input type="submit" value="submit">
+            <input type="submit" value="submit" class="submit">
         </form>
         <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
     </div>
@@ -88,12 +151,12 @@
 <!--2 ajax data are field and then popup is display using jquery-->
 <script type="text/javascript">
     //ajax request for displaying prev month`
-    $('.prev').on('click',function(e) {
+    $('.prev').on('click', function(e) {
         e.preventDefault();
         $("#body").load("{%url 'calendar' year=prev_year monthe=prev_month %}")
     });
 
-    $('.next').on('click',function(e) {
+    $('.next').on('click', function(e) {
         e.preventDefault();
         $("#body").load("{%url 'calendar' year=nex_year monthe=nex_month %}")
     });
@@ -101,7 +164,14 @@
     $(document).ready(function() {
         $('.active').parents('td').css({
             'background-color': '#2ed39e',
-            "color": '#ffffff'
+            "color":'#ffffff',
+        });
+    });
+
+    $(document).ready(function() {
+        $('.sidebar table tr td .active').parents('td').css({
+            'background-color': '#2ed39e',
+            "color": '#ffffff',
         });
     });
 
@@ -123,36 +193,51 @@
         });
     });
     //modal pop up ends
-    $(function () {
-   $(".popup-2").dialog({
-       autoOpen: false,
-       modal: true,
-       title: "EVENT details",
-       buttons: {
-           Close: function () {
-               $(this).dialog('close');
-           }
-       }
-   });
- });
+    $(function() {
+        $(".popup-2").dialog({
+            autoOpen: false,
+            modal: true,
+            title: "EVENT details",
+            buttons: {
+                Close: function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+    });
 
     //ajax request to open modal when a event is viewed is below
     $('.Event').on('click', function(e) {
-      e.preventDefault();
-      var $link = $(this).attr('href')
+        e.preventDefault();
+        var $link = $(this).attr('href')
 
-      $.ajax({
-    type: "GET", url: $link,
-    async: false,
-    success: function(response){
-      //First you must append to div:
-
-       $(".popup-2").html(response);
-        $(".popup-2").dialog("open");
-      }//success
-      });
+        $.ajax({
+            type: "GET",
+            url: $link,
+            async: false,
+            success: function(response) {
+                //First you must append to div:
+                console.log(response)
+                $(".popup-2").html(response);
+                $(".popup-2").dialog("open");
+            } //success
+        });
     });
-
-//ajax request for view_event ends here
+    //ajax request for view_event ends here
+    $('#modal-window').on('click', function(e) {
+        e.preventDefault();
+        console.log("success")
+        var $link = $(this).attr('href')
+        $.ajax({
+            type: "GET",
+            url: $link,
+            async: false,
+            success: function(response) {
+                //First you must append to div:
+                $(".popup-2").html(response);
+                $(".popup-2").dialog("open");
+            } //success
+        });
+    });
 </script>
 {%block script_block%}{% endblock %} {% block end_block%} {% endblock %}
