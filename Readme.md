@@ -1,22 +1,23 @@
-#Calendar app 
+# Calendar app 
 --------------------------------------------------------------------------------------------------
 
 this app is created to add event see time and current temperature
 
-##Dependencies
+## Dependencies
 
 1)Django 2)requests module
 
-###How to install dependencies
+### How to install dependencies
 
 ```sh
 pip install django
 ```
 also
-```pip install requests
+```
+pip install requests
 ```
 
-###Running the app
+### Running the app
 
 -Go to the calendar folder where manage.py is located
 
